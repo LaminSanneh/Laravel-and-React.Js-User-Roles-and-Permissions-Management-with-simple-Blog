@@ -1,0 +1,7 @@
+.register-form label {
+    display: block;
+    margin-bottom: 10px;
+}
+.register-form input {
+    padding: 10px;
+}

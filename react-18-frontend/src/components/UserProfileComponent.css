@@ -1,0 +1,7 @@
+.update-profile-form label {
+    display: block;
+    margin-bottom: 10px;
+}
+.update-profile-form input, .update-profile-form textarea {
+    padding: 10px;
+}

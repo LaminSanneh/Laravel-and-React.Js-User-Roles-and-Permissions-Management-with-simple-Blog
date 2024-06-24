@@ -1,0 +1,7 @@
+.logout-form label {
+    display: block;
+    margin-bottom: 10px;
+}
+.logout-form input {
+    padding: 10px;
+}

@@ -1,0 +1,65 @@
+version: '3'
+
+services:
+  app:
+    build:
+      context: ./laravel-11-backend
+      dockerfile: Dockerfile
+    ports:
+      - "8000:9000"
+    volumes:
+      # - ./laravel-11-backend:/var/www/html
+
+      - ./laravel-11-backend:/var/www/html
+      - ./laravel-11-backend/storage:/var/www/html/storage
+      - ./laravel-11-backend/bootstrap/cache:/var/www/html/bootstrap/cache
+    networks:
+      - laravel-network
+    depends_on:
+      - mysql
+    # environment:
+    #   - APP_ENV=local
+    #   - APP_DEBUG=true
+    #   - APP_KEY=base64:YourBase64EncodedKeyHere
+    #   - DB_CONNECTION=mysql
+    #   - DB_HOST=mysql
+    #   - DB_PORT=3306
+    #   - DB_DATABASE=your_database
+    #   - DB_USERNAME=your_username
+    #   - DB_PASSWORD=your_password
+
+  mysql:
+    image: mysql:8.0
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: laravel_react_blog_user_permission
+      # MYSQL_USER: root
+      # MYSQL_PASSWORD: vicecity
+      MYSQL_ROOT_PASSWORD: vicecity
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    networks:
+      - laravel-network
+
+  frontend:
+    build:
+      context: ./react-18-frontend
+      dockerfile: Dockerfile
+    ports:
+      - "5173:5173"
+    volumes:
+      - ./react-18-frontend:/usr/src/app
+      - /usr/src/app/node_modules
+    networks:
+      - laravel-network
+    depends_on:
+      - app
+
+networks:
+  laravel-network:
+    driver: bridge
+
+volumes:
+  mysql_data:

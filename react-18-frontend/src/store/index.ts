@@ -5,7 +5,6 @@ import { useDispatch, useSelector, useStore } from "react-redux";
 import userSlice from "./slices/userSlice";
 import authReducer from "./slices/authReducer";
 import userProfileSlice from "./slices/userProfileSlice";
-import globalMessageMiddleware from "../middleware/globalMessageMiddleware";
 
 const rootReducer = combineReducers({
   auth: authReducer,
@@ -16,9 +15,6 @@ const rootReducer = combineReducers({
 
 export const store = configureStore({
   reducer: rootReducer,
-  // middleware: ((getDefaultMiddleware) => {
-  //   return getDefaultMiddleware().concat(globalMessageMiddleware)
-  // })
 });
 
 export type RootState = ReturnType<typeof store.getState>;

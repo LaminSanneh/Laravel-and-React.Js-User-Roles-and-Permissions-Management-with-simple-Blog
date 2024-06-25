@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { makeGetUserRequest, makeUpdatetUserProfileRequest } from "../../services/userService";
+import { makeGetUserRequest, makeUpdatetUserProfileRequest } from "../../services/userProfileService";
 import { Role } from "./userSlice";
 
 interface User {

@@ -1,13 +1,17 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import axios from "axios";
-import authHeader from "../../services/authHeader";
+import {
+  makeCreatePostRequest,
+  makeDeletePostRequest,
+  makeFetchPostRequest,
+  makeFetchPostsRequest,
+  makeUpdatePostRequest,
+} from "../../services/postService";
 
 export const fetchPosts = createAsyncThunk<Post[], void>(
   "post/fetchPosts",
   async () => {
     try {
-      const headers = {headers: authHeader.getAuthHeader()};
-      return (await axios.get("http://localhost:8000/api/posts", headers)).data;
+      return await makeFetchPostsRequest();
     } catch (error) {
       throw new Error("Failed to get posts data");
     }
@@ -18,8 +22,7 @@ export const fetchPost = createAsyncThunk<Post, number>(
   "post/fetchPost",
   async (id) => {
     try {
-      const headers = {headers: authHeader.getAuthHeader()};
-      return (await axios.get(`http://localhost:8000/api/posts/${id}`, headers)).data;
+      return await makeFetchPostRequest(id);
     } catch (error) {
       throw new Error("Failed to get single post data");
     }
@@ -30,8 +33,7 @@ export const deletePost = createAsyncThunk<number, number>(
   "post/deletePost",
   async (id) => {
     try {
-      const headers = {headers: authHeader.getAuthHeader()};
-      (await axios.delete(`http://localhost:8000/api/posts/${id}`, headers)).data;
+      return await makeDeletePostRequest(id);
       return id;
     } catch (error) {
       throw new Error("Failed to delete single post data");
@@ -43,8 +45,7 @@ export const createPost = createAsyncThunk<Post, CreatePostData>(
   "post/createPost",
   async (postData) => {
     try {
-      const headers = {headers: authHeader.getAuthHeader()};
-      return (await axios.post("http://localhost:8000/api/posts", postData, headers)).data;
+      return await makeCreatePostRequest(postData);
     } catch (error) {
       throw new Error("Failed to get posts data");
     }
@@ -53,10 +54,9 @@ export const createPost = createAsyncThunk<Post, CreatePostData>(
 
 export const updatePost = createAsyncThunk<Post, UpdatePostData>(
   "post/updatePost",
-  async (postData) => {
+  async (updatePostData) => {
     try {
-      const headers = {headers: authHeader.getAuthHeader()};
-      return (await axios.put(`http://localhost:8000/api/posts/${postData.id}`, postData, headers)).data;
+      return await makeUpdatePostRequest(updatePostData);
     } catch (error) {
       throw new Error("Failed to update posts");
     }
@@ -68,9 +68,9 @@ interface PostBasic {
   body: string;
 }
 
-interface CreatePostData extends PostBasic {}
+export interface CreatePostData extends PostBasic {}
 
-interface UpdatePostData extends PostBasic {
+export interface UpdatePostData extends PostBasic {
   id: number;
 }
 
@@ -78,7 +78,7 @@ interface Post extends PostBasic {
   id: number;
   author: {
     name: string;
-  }
+  };
   created_at: string;
   updated_at: string;
 }
@@ -143,9 +143,11 @@ const postSlice = createSlice({
       })
       .addCase(deletePost.fulfilled, (state, action) => {
         state.loading = false;
-        state.posts = [...state.posts.filter((post) => {
-          return action.meta.arg !== post.id;
-        })];
+        state.posts = [
+          ...state.posts.filter((post) => {
+            return action.meta.arg !== post.id;
+          }),
+        ];
       })
       .addCase(deletePost.rejected, (state, action) => {
         state.loading = false;

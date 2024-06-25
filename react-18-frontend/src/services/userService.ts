@@ -1,27 +1,60 @@
 import axios from "axios";
-import { UpdateUserData as UpdateUserProfileData } from "../store/slices/userProfileSlice";
 import authHeader from "./authHeader";
+import { CreateUserData, UpdateUserData } from "../store/slices/userSlice";
 
-export const makeGetUserRequest = async () => {
-  try {
-    const headers = {headers: authHeader.getAuthHeader()};
-    return (await axios.get(`http://localhost:8000/api/getUserData`, headers)).data;
-  } catch (error) {
-    throw new Error("Failed to get user data");
-  }
-};
+const envVariables = import.meta.env;
 
-export const makeUpdatetUserProfileRequest = async (userData: UpdateUserProfileData) => {
-  try {
-    const headers = {headers: authHeader.getAuthHeader()};
-    return (
-      await axios.post(
-        `http://localhost:8000/api/updateUserProfile`,
-        userData,
-        headers
-      )
-    ).data;
-  } catch (error) {
-    throw new Error("Failed to register user");
-  }
-};
+export const makeFetchUsersRequest = async () => {
+    try {
+      const headers = { headers: authHeader.getAuthHeader() };
+      return (
+        await axios.get(`${envVariables.VITE_BACKEND_URL}/users`, headers)
+      ).data;
+    } catch (error) {
+      throw new Error("Failed to delete post: service");
+    }
+  };
+
+  export const makeFetchUserRequest = async (id: number) => {
+    try {
+      const headers = { headers: authHeader.getAuthHeader() };
+      return (
+        await axios.get(`${envVariables.VITE_BACKEND_URL}/users/${id}`, headers)
+      ).data;
+    } catch (error) {
+      throw new Error("Failed to delete post: service");
+    }
+  };
+
+  export const makeDeleteUserRequest = async (id: number) => {
+    try {
+      const headers = { headers: authHeader.getAuthHeader() };
+      return (
+        await axios.delete(`${envVariables.VITE_BACKEND_URL}/users/${id}`, headers)
+      ).data;
+    } catch (error) {
+      throw new Error("Failed to delete post: service");
+    }
+  };
+
+  export const makeCreateUserRequest = async (userData: CreateUserData) => {
+    try {
+      const headers = { headers: authHeader.getAuthHeader() };
+      return (
+        await await axios.post("${envVariables.VITE_BACKEND_URL}/users", userData, headers)
+      ).data;
+    } catch (error) {
+      throw new Error("Failed to delete post: service");
+    }
+  };
+
+  export const makeUpdateUserRequest = async (userData: UpdateUserData) => {
+    try {
+      const headers = { headers: authHeader.getAuthHeader() };
+      return (
+        await axios.put(`${envVariables.VITE_BACKEND_URL}/users/${userData.id}`, userData, headers)
+      ).data;
+    } catch (error) {
+      throw new Error("Failed to delete post: service");
+    }
+  };

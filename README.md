@@ -1,4 +1,4 @@
-# Project Name: Springboot and ReactNative Money Transfer Android Mobile and Web Application
+# Project Name: Laravel and React.Js User Roles and Permissions Management with simple Blog
 
 ## Project Status: Work In Progress
 
@@ -30,7 +30,7 @@
 # How to run
 ### Laravel Server
 ```
-cd rlaravel-foldereact-folder
+cd laravel-folder
 ```
 ```
 php artisan serve

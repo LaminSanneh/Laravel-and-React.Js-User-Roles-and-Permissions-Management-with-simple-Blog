@@ -20,7 +20,8 @@
 ## Technical Requirement Items (some in the workings)
 - UsersController and PostsController tests
 - User roles and access control in backend using policies and controller gates. This is done usng Laravel Sanctum
-- Finish up docker files setup for development and deployment - `WIP`
+- Add docker files for development
+- Finish setting up docker files setup for production and deployment - `WIP`
 - Add more extensive test to cober AuthController and UserProfileController tests - `WIP`
 - Add cypress end to end testing - `WIP`
 - Secure auth token storage on frontend. Currently stored as plaintext - `WIP`

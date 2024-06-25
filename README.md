@@ -27,7 +27,7 @@
 - Centralize and make better the error handling from bacend api calls - `WIP`
 - Add token refresh mechanism or detect when it is expired or invalidated - `WIP`
 
-# How to run
+# How to run outside docker
 ### Laravel Server
 ```
 cd laravel-folder
@@ -43,6 +43,15 @@ cd react-folder
 ```
 npm run dev
 ```
+
+# How to run with docker
+Inside the same folder level as the `docker-compose.yml` file
+run
+```
+docker-compose up -d --build
+```
+
+Visit `localhost:5173`
 
 # Screens
 <img src="readme-images/add-post-page.png" alt="add-post-page.png" width="200" /><img src="readme-images/add-user-page.png" alt="add-user-page" width="200" /><img src="readme-images/edit-user.png" alt="edit-user.pngn-2" width="200" /><img src="readme-images/login-page.png" alt="login-page.png" width="200" /><img src="readme-images/logout-page.png" alt="logout-page" width="200" /><img src="readme-images/posts-page-1.png" alt="posts-page-1" width="200" /><img src="readme-images/profile-page.png" alt="profile-page" width="200" /><img src="readme-images/register-page.png" alt="register-page" width="200" /><img src="readme-images/users-page-1.png" alt="users-page-1" width="200" />
